@@ -1,4 +1,6 @@
-$.fn.cardStack = function () {
+$.fn.cardStack = function (optionsObj) {
+
+
 
     $(this).addClass("card-slider-wrapper");
 
@@ -10,9 +12,24 @@ $.fn.cardStack = function () {
     var maxPossibleWidth = wrapperWidth - (minBreathingSpace * (numberOfItems - 1));
 
     //DEFINE VARIABLES
-    var animationTime = 700;
-    var slideDelay = 3000;
-    var slideDirection = "left";
+    if (optionsObj.speed) {
+        var animationTime = optionsObj.speed;
+    } else {
+        var animationTime = 700;
+    };
+
+    if (optionsObj.delay) {
+        var slideDelay = optionsObj.delay;
+    } else {
+        var slideDelay = 3000;
+    };
+
+    if (optionsObj.direction) {
+        var slideDirection = optionsObj.direction;
+    } else {
+        var slideDirection = "left";
+    };
+
 
     var sliderWrapper = $(this);
     var c = 5;
