@@ -1,4 +1,4 @@
-$.fn.accordion = function () {
+$.fn.cardStack = function () {
 
     $(this).addClass("card-slider-wrapper");
 
