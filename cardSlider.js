@@ -30,9 +30,15 @@ $.fn.cardStack = function (optionsObj) {
         var slideDirection = "left";
     };
 
+    if (optionsObj.autoplay) {
+        var autoplay = optionsObj.autoplay;
+    } else {
+        var autoplay = true;
+    };
+
 
     var sliderWrapper = $(this);
-    var c = 5;
+    //var c = 5;
     var e = null;
 
     var widestItem = 0;
@@ -72,6 +78,13 @@ $.fn.cardStack = function (optionsObj) {
     });
 
     function slideToCard(cardIndex) {
+        
+        
+        /* Add a Active class to the current card */
+        
+        $('.card-slider-wrapper li').removeClass('active');
+        sliderWrapper.children("li")[cardIndex].classList.add('active');
+        
         if (cardIndex != 0) {
             var cardSlideVal = parseInt($('.card-slider-wrapper').children("li")[cardIndex - 1].style[slideDirection]);
 
@@ -138,25 +151,30 @@ $.fn.cardStack = function (optionsObj) {
     //DEFINE SLIDING ON HOVER 
     sliderWrapper.children("li").mouseenter(function () {
         var index = sliderWrapper.children("li").index(this);
-        c = index;
+        currentSlide = index;
         slideToCard(index);
         clearTimeout(autoSlideTimer);
         autoSlide();
     });
 
     //METHOD SLIDING THE CARDS AUTOMATICALLY
+    var currentSlide = 1;
+
     function autoSlide() {
         autoSlideTimer = setTimeout(function () {
-            if (c >= sliderWrapper.children("li").length) {
-                c = 0
-            } else {
-                c++
+            
+            slideToCard(currentSlide);
+            currentSlide++
+            if (currentSlide >= sliderWrapper.children("li").length) {
+                currentSlide = 0
             };
-            slideToCard(c);
+            
             autoSlide();
         }, slideDelay);
     };
 
     //INITIATE AUTO SLIDING
-    autoSlide()
+    if (autoplay) {
+        autoSlide();
+    };
 };
